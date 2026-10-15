@@ -1,0 +1,101 @@
+/**
+ * Design Tokens — SwitchBridge
+ * Authentic Machined Nintendo Switch Hardware Aesthetic
+ * Inspired by official Joy-Con ergonomics, matte polycarbonate chassis,
+ * precision LED indicator matrices, and high-frequency BLE telemetry instrumentation.
+ */
+
+:root {
+  /* Chassis & Polycarbonate Surfaces */
+  --chassis-black: #0b0d11;
+  --chassis-dark: #12151b;
+  --chassis-panel: #171b23;
+  --chassis-surface: #1e232e;
+  --chassis-elevated: #262c3a;
+  --chassis-overlay: rgba(18, 21, 27, 0.82);
+
+  /* Precise Mechanical Dividers & Edges */
+  --chassis-border-subtle: #242a37;
+  --chassis-border-default: #31394a;
+  --chassis-border-highlight: #47536b;
+  --chassis-bevel: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --chassis-bevel-active: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+
+  /* Iconic Joy-Con Hardware Colors */
+  --joycon-cyan: #00c3e3;
+  --joycon-cyan-dark: #0093ab;
+  --joycon-cyan-glow: rgba(0, 195, 227, 0.22);
+  --joycon-cyan-dim: rgba(0, 195, 227, 0.12);
+
+  --joycon-red: #ff3c28;
+  --joycon-red-dark: #d62714;
+  --joycon-red-glow: rgba(255, 60, 40, 0.22);
+  --joycon-red-dim: rgba(255, 60, 40, 0.12);
+
+  /* Telemetry & Reward Status Accents */
+  --coin-gold: #ffbe1a;
+  --coin-gold-glow: rgba(255, 190, 26, 0.25);
+  --coin-gold-dark: #c48c08;
+
+  --signal-green: #00e599;
+  --signal-green-glow: rgba(0, 229, 153, 0.25);
+  --signal-green-dark: #00a86b;
+
+  --signal-amber: #f59e0b;
+  --signal-amber-glow: rgba(245, 158, 11, 0.2);
+
+  --signal-danger: #ef4444;
+  --signal-danger-glow: rgba(239, 68, 68, 0.2);
+
+  /* High-Contrast Typography */
+  --text-pure: #ffffff;
+  --text-high: #f1f5f9;
+  --text-body: #cbd5e1;
+  --text-muted: #8b99ad;
+  --text-dim: #546274;
+
+  /* Typography Stacks */
+  --font-display: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Monaco, Consolas, monospace;
+
+  /* Type Scale */
+  --text-2xs: 0.6875rem; /* 11px */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.84375rem; /* 13.5px */
+  --text-base: 0.9375rem;/* 15px */
+  --text-md: 1.0625rem;  /* 17px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.5rem;     /* 24px */
+  --text-2xl: 2rem;      /* 32px */
+  --text-3xl: 2.5rem;    /* 40px */
+
+  /* Structural Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+  --radius-pill: 9999px;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 28px;
+  --space-7: 40px;
+  --space-8: 56px;
+
+  /* Mechanical Depth & Shadows */
+  --shadow-flat: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-hardware: 0 4px 16px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-console: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--chassis-border-subtle);
+  --shadow-trigger: 0 8px 24px rgba(255, 60, 40, 0.28), 0 2px 4px rgba(0, 0, 0, 0.4);
+
+  /* Transitions */
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 150ms var(--ease-snappy);
+  --transition-normal: 250ms var(--ease-snappy);
+}

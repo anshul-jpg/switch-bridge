@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d11">
+  <meta name="description"
+    content="Clean-room Web Bluetooth Nintendo Switch emulator for Pokémon GO. Instant postcard exchange, Gimmighoul Coin Bag synchronization, and regional Vivillon tracking without physical console hardware.">
+  <title>SwitchBridge &mdash; Nintendo Switch BLE Hardware Bridge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css?v=6">
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- Top Hardware Header & Device Status -->
+    <header class="top-bar">
+      <div class="brand-group">
+        <div class="brand-icon-box" aria-hidden="true">
+          <!-- Nintendo Switch Console SVG Glyph -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="3"></rect>
+            <path d="M7 8v8"></path>
+            <circle cx="16" cy="12" r="2.5"></circle>
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <div class="brand-title-row">
+            <span class="brand-name">SwitchBridge</span>
+            <span class="brand-badge">Hardware Deck</span>
+          </div>
+          <span class="brand-sub">Titan / Saturday BLE Protocol • v1.3.0</span>
+        </div>
+      </div>
+
+      <div class="badge-row">
+        <!-- Web Audio Tactile Synthesizer Toggle -->
+        <button type="button" class="audio-toggle-btn active" id="btn-audio-toggle"
+          title="Toggle mechanical click & chime feedback" aria-label="Toggle mechanical sound feedback">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" id="audio-icon">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span id="audio-label">Sound: ON</span>
+        </button>
+
+        <div class="status-pill" id="machine-pill">
+          <span class="status-dot" id="machine-dot"></span>
+          <span id="machine-text">GATT Ready</span>
+        </div>
+
+        <div class="status-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>100% Client-Side</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- THE HERO CENTERPIECE: VIRTUAL NINTENDO SWITCH HARDWARE DECK -->
+    <section class="virtual-console-deck" aria-label="Nintendo Switch Virtual Console Display">
+      
+      <!-- Top Strip with Serial & Chassis Cooling Vents -->
+      <div class="console-top-strip">
+        <div class="console-serial">
+          <span>MODEL: HAC-001(-01)</span>
+          <span>•</span>
+          <span>TITAN GATT CENTRAL</span>
+        </div>
+        <div class="console-vent-slots" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <!-- Main Hardware Body: Left Joy-Con + OLED Screen + Right Joy-Con -->
+      <div class="console-hardware-body">
+        
+        <!-- Left Joy-Con (Neon Cyan) -->
+        <div class="joycon-rail-left" aria-hidden="true">
+          <div class="joycon-btn-minus"></div>
+          <div class="joycon-stick">
+            <div class="joycon-stick-inner"></div>
+          </div>
+          <div class="joycon-dpad">
+            <div class="joycon-dpad-btn"></div>
+            <div class="joycon-dpad-row">
+              <div class="joycon-dpad-btn"></div>
+              <div class="joycon-dpad-btn"></div>
+            </div>
+            <div class="joycon-dpad-btn"></div>
+          </div>
+          <div class="joycon-led-rail" id="joycon-led-rail-left">
+            <span class="active" title="Player 1 Active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+
+        <!-- Center Screen: Switch OLED Screen Live HUD -->
+        <div class="console-screen-frame">
+          
+          <!-- Screen Top Status Ribbon -->
+          <div class="screen-top-bar">
+            <div class="screen-link-status">
+              <div class="ble-signal-bars" id="ble-signal-bars">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <span id="screen-freq">2.4 GHz BLE GATT</span>
+            </div>
+            <div id="screen-console-clock">LOCAL RUNTIME</div>
+            <div>[ AC PWR 100% ]</div>
+          </div>
+
+          <!-- Central Dynamic Screen Display -->
+          <div class="screen-display-core">
+            <div class="screen-avatar-badge" id="screen-trainer-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="7" r="4"></circle>
+                <path d="M5.5 21a8.38 8.38 0 0 1 13 0"></path>
+              </svg>
+              <span id="screen-trainer-text">Standby • Ready for Pokémon GO</span>
+            </div>
+
+            <h2 class="screen-headline" id="screen-hero-title">Nintendo Switch Emulator</h2>
+            <p class="screen-subtext" id="screen-hero-desc">
+              Synchronize postcards to trigger your daily Gimmighoul Coin Bag without requiring a physical Switch console.
+            </p>
+
+            <!-- Live Animated BLE Carrier Waveform -->
+            <div class="carrier-wave-box" id="carrier-wave-box">
+              <svg class="carrier-wave-svg" viewBox="0 0 380 24" preserveAspectRatio="none">
+                <path class="carrier-wave-path" d="M 0,12 Q 20,4 40,12 T 80,12 T 120,12 T 160,12 T 200,12 T 240,12 T 280,12 T 320,12 T 360,12 T 380,12"></path>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Screen Bottom Handshake Steps Track -->
+          <div class="screen-steps-rail">
+            <div class="screen-step-node done" id="step-node-1">
+              <span class="screen-step-num">01</span>
+              <span>STANDBY</span>
+            </div>
+            <div class="screen-step-node" id="step-node-2">
+              <span class="screen-step-num">02</span>
+              <span>BLE SCAN</span>
+            </div>
+            <div class="screen-step-node" id="step-node-3">
+              <span class="screen-step-num">03</span>
+              <span>HANDSHAKE</span>
+            </div>
+            <div class="screen-step-node" id="step-node-4">
+              <span class="screen-step-num">04</span>
+              <span>COIN BAG</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Joy-Con (Neon Red) -->
+        <div class="joycon-rail-right" aria-hidden="true">
+          <div class="joycon-btn-plus"></div>
+          <div class="joycon-abxy">
+            <div class="joycon-abxy-btn">X</div>
+            <div style="display:flex;gap:3px;">
+              <div class="joycon-abxy-btn">Y</div>
+              <div class="joycon-abxy-btn">A</div>
+            </div>
+            <div class="joycon-abxy-btn">B</div>
+          </div>
+          <div class="joycon-stick">
+            <div class="joycon-stick-inner"></div>
+          </div>
+          <div class="joycon-home-btn">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Main Workspace Two-Column Layout -->
+    <main class="workspace-grid">
+
+      <!-- Left Column: Action Console, Claim Guide, Rewards, and History -->
+      <div class="column-main">
+
+        <!-- Physical Action Station Panel -->
+        <section class="action-deck-panel">
+          <div class="panel-header">
+            <h1 class="panel-title">Postcard Synchronization Deck</h1>
+            <p class="panel-desc">
+              Automatic handshake sensor: detects both Pairing Mode (<code class="kbd-tag">0x00</code>) and Postcard Transfer Mode (<code class="kbd-tag">0x01</code>).
+            </p>
+          </div>
+
+          <!-- Console Connection Status Banner -->
+          <div class="console-link-card" id="console-link-card">
+            <div class="console-link-left">
+              <div class="console-link-icon-box" id="console-link-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="3"></rect>
+                  <path d="M7 9v6"></path>
+                  <circle cx="16" cy="12" r="2"></circle>
+                </svg>
+              </div>
+              <div class="console-link-info">
+                <div class="console-link-title" id="console-link-title">Nintendo Switch Standby</div>
+                <div class="console-link-sub" id="console-link-sub">Tap 'Send to Nintendo Switch' in Pokémon GO, then click the trigger below</div>
+              </div>
+            </div>
+            <div class="console-link-badge" id="console-link-badge">Ready</div>
+          </div>
+
+          <!-- Tactile Options Bar -->
+          <div class="scan-options-row">
+            <label class="checkbox-label" for="toggle-broad-scan">
+              <input type="checkbox" id="toggle-broad-scan" checked>
+              <span>Broad BLE Scan (Displays all nearby devices for maximum device compatibility)</span>
+            </label>
+          </div>
+
+          <!-- Real-Time Scanner Laser Beam -->
+          <div class="scanner-container" id="scanner-line">
+            <div class="scanner-bar"></div>
+          </div>
+
+          <!-- Hero Action Button: Tactile Hardware Trigger -->
+          <button type="button" class="primary-action-btn" id="btn-execute">
+            <div class="btn-content-wrap">
+              <div class="btn-main-label">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round" id="btn-icon">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span id="btn-label">Send Postcard & Claim Coin Bag</span>
+              </div>
+              <div class="btn-sub-label" id="btn-sub-label">
+                Tap "Send to Nintendo Switch" in Pokémon GO, then click here
+              </div>
+            </div>
+          </button>
+
+          <!-- Status Banner Callout -->
+          <div class="status-banner" id="status-box">
+            <div class="status-headline">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" id="status-icon">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 14 14"></polyline>
+              </svg>
+              <span id="status-text">Standby. Choose your mode and launch pairing.</span>
+            </div>
+            <div class="status-detail" id="status-sub">
+              Web Bluetooth GATT engine initialized. Ready to bind service abfaf4c7-...
+            </div>
+          </div>
+        </section>
+
+        <!-- Daily Reward & Gimmighoul Coin Bag Card -->
+        <section class="reward-panel">
+          <div class="reward-stat-box">
+            <div class="reward-left">
+              <div class="coin-bag-icon-frame" aria-hidden="true">💰</div>
+              <div>
+                <div class="stat-label">DAILY GIMMIGHOUL COIN BAG RESET</div>
+                <div class="stat-value" id="timer-val">Calculating...</div>
+                <div class="stat-desc">Synchronizes at 00:00 midnight in your local timezone</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step-by-Step Interactive Claim Flow -->
+        <section class="section-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Operation Runbook</h2>
+            <p class="panel-desc">Physical workflow for postcard transfers and one-time profile registration.</p>
+          </div>
+
+          <div class="guide-flow-grid">
+            <div class="guide-flow-card">
+              <div class="guide-step-tag">Step 01 • Phone</div>
+              <div class="guide-card-text">
+                In Pokémon GO, tap <span class="kbd-tag">Items</span> → <span class="kbd-tag">Postcard Book</span> → open any postcard.
+              </div>
+            </div>
+            <div class="guide-flow-card">
+              <div class="guide-step-tag">Step 02 • Phone</div>
+              <div class="guide-card-text">
+                Tap the <span class="kbd-tag">≡</span> menu button at bottom right, then select <span class="kbd-tag">Send to Nintendo Switch</span>.
+              </div>
+            </div>
+            <div class="guide-flow-card">
+              <div class="guide-step-tag">Step 03 • PC / Browser</div>
+              <div class="guide-card-text">
+                While your phone is searching, click the red <strong>Send Postcard</strong> button above to connect and claim your bag!
+              </div>
+            </div>
+          </div>
+
+          <details class="pair-accordion">
+            <summary>First time ever connecting this phone to a Switch? Tap here for 1-time pairing</summary>
+            <div class="pair-accordion-content">
+              If Pokémon GO says <em>"No Nintendo Switch found"</em>, pair once: In Pokémon GO, open <span class="kbd-tag">Settings</span> → <span class="kbd-tag">Connected Devices</span> → <span class="kbd-tag">Nintendo Switch</span> → tap <span class="kbd-tag">Connect to Nintendo Switch</span>, then click the button above. The bridge auto-detects Pairing Mode (<code class="kbd-tag">0x00</code>) and registers your virtual console.
+            </div>
+          </details>
+        </section>
+
+        <!-- Postcard Transfer History Ledger -->
+        <section class="section-panel">
+          <div class="panel-header-split">
+            <div>
+              <h2 class="panel-title">Postcard Transfer Ledger</h2>
+              <p class="panel-desc">Persistent local audit log of received postcards and speed benchmarks.</p>
+            </div>
+            <button type="button" class="terminal-clear-btn" id="btn-clear-history">Clear History</button>
+          </div>
+
+          <div class="history-list" id="history-container">
+            <div class="history-empty">
+              No postcards logged yet. When you transfer a postcard from Pokémon GO, its timestamp, trainer name, and latency benchmark will appear here.
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Right Column: Hardware Inspector, Telemetry, and Preflight -->
+      <aside class="column-side">
+
+        <!-- Virtual Console Identity Card -->
+        <section class="identity-box">
+          <div class="panel-header">
+            <h2 class="panel-title">Virtual Switch Identity</h2>
+            <p class="panel-desc">
+              Deterministic UUIDv5 accessory identifier bound to your phone's paired devices list.
+            </p>
+          </div>
+
+          <div class="identity-key-display" id="app-id-display">Generating...</div>
+
+          <div class="id-actions">
+            <button type="button" class="secondary-btn" id="btn-copy-id">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy ID</span>
+            </button>
+            <button type="button" class="secondary-btn" id="btn-regen-id">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+              </svg>
+              <span>Regenerate</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Live Hardware Telemetry Log -->
+        <section class="telemetry-panel">
+          <div class="terminal-header">
+            <span class="terminal-title">GATT Telemetry Feed</span>
+            <button type="button" class="terminal-clear-btn" id="btn-clear-log">Clear</button>
+          </div>
+          <div class="terminal-feed" id="log-feed">
+            <div class="log-entry">
+              <span class="log-time">[Init]</span>
+              <span class="log-msg info">System ready. No external network transmission.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Compatibility Preflight Checklist -->
+        <section class="checklist-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">Environment Preflight</h3>
+            <p class="panel-desc">Hardware and browser capability verification.</p>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon ok" id="check-icon-ble">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div>
+              <div class="check-label" id="check-title-ble">Web Bluetooth API</div>
+              <div class="check-sub" id="check-sub-ble">Supported in Chrome, Edge, and Bluefy (iOS).</div>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon ok">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div>
+              <div class="check-label">Web Cryptography</div>
+              <div class="check-sub">SubtleCrypto SHA-256 & BigInt RSA-2048 signing engine active.</div>
+            </div>
+          </div>
+
+          <div class="check-item">
+            <div class="check-icon ok">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div>
+              <div class="check-label">Zero Network Leakage</div>
+              <div class="check-sub">All packets remain inside local browser memory.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Titan GATT Architecture Reference -->
+        <section class="checklist-panel" style="background: var(--chassis-dark); font-family: var(--font-mono); font-size: 11px;">
+          <div class="panel-header" style="margin-bottom: var(--space-2);">
+            <h3 class="panel-title" style="font-size: var(--text-sm);">Titan / Saturday Spec</h3>
+            <p class="panel-desc">Hardware GATT characteristic map.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;color:var(--text-muted);">
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--chassis-border-subtle);padding-bottom:4px;">
+              <span>ADVERT UUID</span>
+              <span style="color:var(--text-high);">b6c3089a...</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--chassis-border-subtle);padding-bottom:4px;">
+              <span>PRIMARY GATT</span>
+              <span style="color:var(--joycon-cyan);">abfaf4c7...</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--chassis-border-subtle);padding-bottom:4px;">
+              <span>RSA SIGNING</span>
+              <span style="color:var(--coin-gold);">PKCS#1 v1.5 (2048)</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span>NONCE GEN</span>
+              <span style="color:var(--signal-green);">FNV-1a 64-bit</span>
+            </div>
+          </div>
+        </section>
+
+      </aside>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-note">
+      <span>Operates 100% locally in browser memory via Web Bluetooth. Clean-room implementation.</span>
+      <div class="footer-links">
+        <a href="https://github.com/anshul-jpg/switch-bridge" target="_blank" rel="noopener noreferrer" class="footer-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+            </path>
+          </svg>
+          <span>Source & Documentation</span>
+        </a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script type="module" src="./app.js?v=6"></script>
+</body>
+
+</html>

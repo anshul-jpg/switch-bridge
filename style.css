@@ -1,0 +1,1757 @@
+:root {
+  /* Chassis & Polycarbonate Surfaces */
+  --chassis-black: #0b0d11;
+  --chassis-dark: #13171f;
+  --chassis-panel: #181d26;
+  --chassis-surface: #202633;
+  --chassis-elevated: #283040;
+  --chassis-overlay: rgba(19, 23, 31, 0.85);
+
+  /* Precise Mechanical Dividers & Edges */
+  --chassis-border-subtle: #242c3d;
+  --chassis-border-default: #333e54;
+  --chassis-border-highlight: #475674;
+  --chassis-bevel: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --chassis-bevel-active: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+
+  /* Iconic Joy-Con Hardware Colors */
+  --joycon-cyan: #00c3e3;
+  --joycon-cyan-dark: #0093ab;
+  --joycon-cyan-glow: rgba(0, 195, 227, 0.3);
+  --joycon-cyan-dim: rgba(0, 195, 227, 0.12);
+
+  --joycon-red: #ff3c28;
+  --joycon-red-dark: #d62714;
+  --joycon-red-glow: rgba(255, 60, 40, 0.3);
+  --joycon-red-dim: rgba(255, 60, 40, 0.12);
+
+  /* Telemetry & Reward Status Accents */
+  --coin-gold: #ffbe1a;
+  --coin-gold-glow: rgba(255, 190, 26, 0.25);
+  --coin-gold-dark: #c48c08;
+
+  --signal-green: #00e599;
+  --signal-green-glow: rgba(0, 229, 153, 0.25);
+  --signal-green-dark: #00a86b;
+
+  --signal-amber: #f59e0b;
+  --signal-amber-glow: rgba(245, 158, 11, 0.2);
+
+  --signal-danger: #ef4444;
+  --signal-danger-glow: rgba(239, 68, 68, 0.2);
+
+  /* High-Contrast Typography */
+  --text-pure: #ffffff;
+  --text-high: #f1f5f9;
+  --text-body: #cbd5e1;
+  --text-muted: #8b99ad;
+  --text-dim: #546274;
+
+  /* Typography Stacks */
+  --font-display: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Monaco, Consolas, monospace;
+
+  /* Type Scale */
+  --text-2xs: 0.6875rem; /* 11px */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.84375rem; /* 13.5px */
+  --text-base: 0.9375rem;/* 15px */
+  --text-md: 1.0625rem;  /* 17px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.5rem;     /* 24px */
+  --text-2xl: 2rem;      /* 32px */
+  --text-3xl: 2.5rem;    /* 40px */
+
+  /* Structural Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+  --radius-pill: 9999px;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 28px;
+  --space-7: 40px;
+  --space-8: 56px;
+
+  /* Mechanical Depth & Shadows */
+  --shadow-flat: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-hardware: 0 4px 16px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-console: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px #242c3d;
+  --shadow-trigger: 0 8px 24px rgba(255, 60, 40, 0.28), 0 2px 4px rgba(0, 0, 0, 0.4);
+
+  /* Transitions */
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 150ms var(--ease-snappy);
+  --transition-normal: 250ms var(--ease-snappy);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Reset & Base System                                                        */
+/* -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--chassis-black);
+  color: var(--text-body);
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  padding: var(--space-5) var(--space-4) var(--space-8);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Subtle Industrial Grid Background Pattern */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Accent Lighting Gradients for Joy-Con Neon Corners */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle 600px at 0% 0%, rgba(0, 195, 227, 0.07), transparent 70%),
+    radial-gradient(circle 600px at 100% 0%, rgba(255, 60, 40, 0.07), transparent 70%),
+    radial-gradient(circle 400px at 50% 100%, rgba(255, 190, 26, 0.04), transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Focus Visibility & Accessibility */
+:focus-visible {
+  outline: 2px solid var(--joycon-cyan);
+  outline-offset: 3px;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Layout Framework                                                           */
+/* -------------------------------------------------------------------------- */
+.app-container {
+  width: 100%;
+  max-width: 1180px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  position: relative;
+  z-index: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Top Header Bar                                                             */
+/* -------------------------------------------------------------------------- */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--chassis-dark);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-flat);
+  backdrop-filter: blur(12px);
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.brand-icon-box {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, var(--chassis-elevated), var(--chassis-panel));
+  border: 1px solid var(--chassis-border-default);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--chassis-bevel);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dual-color Joy-Con accent dot inside brand box */
+.brand-icon-box::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--joycon-cyan);
+  box-shadow: 0 0 6px var(--joycon-cyan);
+}
+.brand-icon-box::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--joycon-red);
+  box-shadow: 0 0 6px var(--joycon-red);
+}
+
+.brand-icon-box svg {
+  color: var(--text-pure);
+  position: relative;
+  z-index: 1;
+}
+
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.brand-name {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-pure);
+  letter-spacing: -0.02em;
+}
+
+.brand-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  padding: 2px 6px;
+  background: rgba(255, 60, 40, 0.15);
+  color: var(--joycon-red);
+  border: 1px solid rgba(255, 60, 40, 0.3);
+  border-radius: var(--radius-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.brand-sub {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+.badge-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Audio Toggle Button */
+.audio-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 6px var(--space-3);
+  background: var(--chassis-panel);
+  border: 1px solid var(--chassis-border-default);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.audio-toggle-btn:hover {
+  background: var(--chassis-surface);
+  color: var(--text-pure);
+  border-color: var(--chassis-border-highlight);
+}
+
+.audio-toggle-btn.active {
+  background: var(--joycon-cyan-dim);
+  border-color: rgba(0, 195, 227, 0.4);
+  color: var(--joycon-cyan);
+}
+
+/* Status Pills */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  padding: 6px var(--space-3);
+  background: var(--chassis-panel);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--text-dim);
+  transition: all var(--transition-normal);
+}
+
+.status-dot.active {
+  background-color: var(--signal-green);
+  box-shadow: 0 0 8px var(--signal-green);
+}
+
+.status-dot.busy {
+  background-color: var(--coin-gold);
+  box-shadow: 0 0 8px var(--coin-gold);
+  animation: pulse-dot 1.2s infinite ease-in-out;
+}
+
+.status-dot.error {
+  background-color: var(--signal-danger);
+  box-shadow: 0 0 8px var(--signal-danger);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.2); }
+}
+
+/* -------------------------------------------------------------------------- */
+/* THE HERO: VIRTUAL NINTENDO SWITCH CHASSIS CONSOLE                          */
+/* -------------------------------------------------------------------------- */
+.virtual-console-deck {
+  background: var(--chassis-dark);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-console);
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Machined Carbon Texture Header Strip */
+.console-top-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.console-serial {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.console-vent-slots {
+  display: flex;
+  gap: 3px;
+}
+.console-vent-slots span {
+  width: 14px;
+  height: 3px;
+  background: var(--chassis-surface);
+  border-radius: 1px;
+}
+
+.console-hardware-body {
+  display: grid;
+  grid-template-columns: 80px 1fr 80px;
+  gap: var(--space-3);
+  align-items: stretch;
+  min-height: 290px;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .console-hardware-body {
+    grid-template-columns: 46px 1fr 46px;
+  }
+}
+
+/* --- Left Joy-Con (Neon Cyan) --- */
+.joycon-rail-left {
+  background: linear-gradient(180deg, #094754 0%, #032b34 100%);
+  border: 2px solid var(--joycon-cyan-dark);
+  border-radius: 28px 8px 8px 28px;
+  padding: var(--space-3) var(--space-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2), 0 8px 20px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.joycon-rail-left::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: var(--joycon-cyan);
+  opacity: 0.6;
+}
+
+.joycon-btn-minus {
+  width: 16px;
+  height: 4px;
+  background: #111418;
+  border-radius: 2px;
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.joycon-stick {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2a313d, #12151b);
+  border: 2px solid #3d4657;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.joycon-stick-inner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.joycon-dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.joycon-dpad-row {
+  display: flex;
+  gap: 3px;
+}
+.joycon-dpad-btn {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #15181e;
+  border: 1px solid #303746;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Joy-Con 4-LED Indicator Rail */
+.joycon-led-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 4px 0;
+}
+.joycon-led-rail span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #131b20;
+  border: 1px solid #20333b;
+  transition: all var(--transition-normal);
+}
+.joycon-led-rail span.active {
+  background: var(--signal-green);
+  border-color: var(--signal-green);
+  box-shadow: 0 0 6px var(--signal-green);
+}
+
+/* --- Right Joy-Con (Neon Red) --- */
+.joycon-rail-right {
+  background: linear-gradient(180deg, #661810 0%, #3d0c07 100%);
+  border: 2px solid var(--joycon-red-dark);
+  border-radius: 8px 28px 28px 8px;
+  padding: var(--space-3) var(--space-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2), 0 8px 20px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.joycon-rail-right::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: var(--joycon-red);
+  opacity: 0.6;
+}
+
+.joycon-btn-plus {
+  width: 14px;
+  height: 14px;
+  position: relative;
+}
+.joycon-btn-plus::before, .joycon-btn-plus::after {
+  content: "";
+  position: absolute;
+  background: #111418;
+  border-radius: 1px;
+}
+.joycon-btn-plus::before {
+  top: 5px; left: 0; width: 14px; height: 4px;
+}
+.joycon-btn-plus::after {
+  top: 0; left: 5px; width: 4px; height: 14px;
+}
+
+.joycon-abxy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.joycon-abxy-btn {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #15181e;
+  border: 1px solid #303746;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  font-size: 7px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.joycon-home-btn {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid #282f3a;
+  background: #101317;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.joycon-home-btn svg {
+  color: var(--text-dim);
+}
+
+/* --- Center Switch OLED Screen HUD --- */
+.console-screen-frame {
+  background: #000000;
+  border: 3px solid #1a1e26;
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9), 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* OLED Screen Glass Sheen */
+.console-screen-frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20%;
+  width: 140%;
+  height: 40%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Screen Top Status Ribbon */
+.screen-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 1;
+}
+
+.screen-link-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ble-signal-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+.ble-signal-bars span {
+  width: 2px;
+  background: var(--text-dim);
+  border-radius: 1px;
+}
+.ble-signal-bars span:nth-child(1) { height: 3px; }
+.ble-signal-bars span:nth-child(2) { height: 5px; }
+.ble-signal-bars span:nth-child(3) { height: 7px; }
+.ble-signal-bars span:nth-child(4) { height: 10px; }
+
+.ble-signal-bars.connected span {
+  background: var(--signal-green);
+  box-shadow: 0 0 4px var(--signal-green);
+}
+
+/* Central Screen Dynamic Stage Area */
+.screen-display-core {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-4) 0;
+  gap: var(--space-2);
+  z-index: 1;
+}
+
+.screen-avatar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 4px var(--space-3);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.screen-headline {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-pure);
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.screen-subtext {
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  max-width: 480px;
+}
+
+/* Animated BLE Carrier Waveform Canvas */
+.carrier-wave-box {
+  width: 100%;
+  max-width: 380px;
+  height: 24px;
+  margin: var(--space-1) 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carrier-wave-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.carrier-wave-path {
+  stroke: var(--chassis-border-highlight);
+  stroke-width: 1.5;
+  fill: none;
+  transition: stroke var(--transition-fast);
+}
+
+.carrier-wave-box.scanning .carrier-wave-path {
+  stroke: var(--coin-gold);
+  animation: wave-travel 1s infinite linear;
+}
+
+.carrier-wave-box.active .carrier-wave-path {
+  stroke: var(--signal-green);
+  filter: drop-shadow(0 0 4px var(--signal-green));
+}
+
+@keyframes wave-travel {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 40; }
+}
+
+/* Screen Bottom Handshake Steps Track */
+.screen-steps-rail {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 1;
+}
+
+.screen-step-node {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--text-dim);
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-xs);
+  background: rgba(255, 255, 255, 0.02);
+  transition: all var(--transition-fast);
+}
+
+.screen-step-node.done {
+  color: var(--signal-green);
+  background: rgba(0, 229, 153, 0.08);
+}
+
+.screen-step-node.active {
+  color: var(--coin-gold);
+  background: rgba(255, 190, 26, 0.1);
+  box-shadow: 0 0 6px rgba(255, 190, 26, 0.2);
+}
+
+.screen-step-num {
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+/* -------------------------------------------------------------------------- */
+/* THE PHYSICAL ACTION DECK                                                   */
+/* -------------------------------------------------------------------------- */
+.action-deck-panel {
+  background: var(--chassis-dark);
+  border: 1px solid var(--chassis-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  box-shadow: var(--shadow-hardware);
+  position: relative;
+}
+
+/* Active Scanner Laser Line */
+.scanner-container {
+  width: 100%;
+  height: 2px;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+.scanner-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 120px;
+  background: linear-gradient(90deg, transparent, var(--joycon-cyan), transparent);
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.scanner-container.active .scanner-bar {
+  opacity: 1;
+  animation: laser-sweep 1.4s infinite ease-in-out;
+}
+
+@keyframes laser-sweep {
+  0% { transform: translateX(-120px); }
+  100% { transform: translateX(1100px); }
+}
+
+/* Primary Action Button (Tactile Hardware Trigger) */
+.primary-action-btn {
+  width: 100%;
+  background: linear-gradient(180deg, var(--joycon-red) 0%, var(--joycon-red-dark) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+  color: var(--text-pure);
+  box-shadow: var(--shadow-trigger), var(--chassis-bevel);
+  transition: transform 90ms ease, box-shadow 90ms ease, background 200ms ease;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.primary-action-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 60, 40, 0.4), 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.primary-action-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 4px 12px rgba(255, 60, 40, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.primary-action-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  filter: grayscale(0.2);
+}
+
+/* Busy Scanning State */
+.primary-action-btn.busy {
+  background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+  box-shadow: 0 8px 24px rgba(217, 119, 6, 0.35);
+}
+
+/* Success Green State */
+.primary-action-btn.success {
+  background: linear-gradient(180deg, #059669 0%, #047857 100%);
+  box-shadow: 0 8px 24px rgba(5, 150, 105, 0.35);
+}
+
+.btn-content-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.btn-main-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.btn-sub-label {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  opacity: 0.9;
+  letter-spacing: 0.01em;
+}
+
+/* Scan Options Row with Tactile Toggle */
+.scan-options-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  background: var(--chassis-panel);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  color: var(--text-body);
+}
+
+.checkbox-label input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--chassis-surface);
+  border: 1px solid var(--chassis-border-highlight);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+  background: var(--joycon-cyan);
+  border-color: var(--joycon-cyan);
+}
+
+.checkbox-label input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Status Banner Callout */
+.status-banner {
+  background: var(--chassis-panel);
+  border: 1px solid var(--chassis-border-default);
+  border-left: 4px solid var(--coin-gold);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  transition: all var(--transition-normal);
+}
+
+.status-banner.connected {
+  border-left-color: var(--signal-green);
+  background: rgba(0, 229, 153, 0.05);
+}
+
+.status-headline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-high);
+}
+
+.status-detail {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+/* -------------------------------------------------------------------------- */
+/* CONSOLE LINK STATUS CARD                                                   */
+/* -------------------------------------------------------------------------- */
+.console-link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--chassis-panel);
+  border: 1px solid var(--chassis-border-default);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+}
+
+.console-link-card.connected {
+  border-color: rgba(0, 229, 153, 0.4);
+  background: linear-gradient(90deg, rgba(0, 229, 153, 0.08), var(--chassis-panel));
+  box-shadow: 0 0 15px rgba(0, 229, 153, 0.1);
+}
+
+.console-link-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.console-link-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--chassis-surface);
+  border: 1px solid var(--chassis-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.console-link-card.connected .console-link-icon-box {
+  background: rgba(0, 229, 153, 0.15);
+  border-color: var(--signal-green);
+  color: var(--signal-green);
+}
+
+.console-link-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.console-link-title {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--text-high);
+}
+
+.console-link-sub {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.console-link-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: 3px 10px;
+  background: var(--chassis-surface);
+  border: 1px solid var(--chassis-border-highlight);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+}
+
+.console-link-card.connected .console-link-badge {
+  background: rgba(0, 229, 153, 0.2);
+  border-color: var(--signal-green);
+  color: var(--signal-green);
+}
+
+/* -------------------------------------------------------------------------- */
+/* DUAL WORKSPACE COLUMNS                                                     */
+/* -------------------------------------------------------------------------- */
+.workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .workspace-grid {
+    grid-template-columns: 1.5fr 1fr;
+  }
+}
+
+.column-main,
+.column-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Reusable Section Panel */
+.section-panel {
+  background: var(--chassis-dark);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-flat);
+  position: relative;
+}
+
+.panel-header {
+  margin-bottom: var(--space-4);
+}
+
+.panel-title {
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--text-pure);
+  letter-spacing: -0.01em;
+}
+
+.panel-desc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.panel-header-split {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+/* -------------------------------------------------------------------------- */
+/* STEP-BY-STEP CLAIM GUIDE (PHYSICAL CARDS)                                 */
+/* -------------------------------------------------------------------------- */
+.guide-flow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.guide-flow-card {
+  background: var(--chassis-panel);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.guide-step-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--joycon-cyan);
+  text-transform: uppercase;
+}
+
+.guide-card-text {
+  font-size: var(--text-xs);
+  color: var(--text-body);
+  line-height: 1.45;
+}
+
+.kbd-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 5px;
+  background: var(--chassis-surface);
+  border: 1px solid var(--chassis-border-highlight);
+  border-radius: var(--radius-xs);
+  color: var(--text-high);
+}
+
+.pair-accordion {
+  background: var(--chassis-panel);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  overflow: hidden;
+}
+
+.pair-accordion summary {
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  color: var(--text-muted);
+  font-weight: 600;
+  user-select: none;
+}
+
+.pair-accordion summary:hover {
+  color: var(--text-pure);
+}
+
+.pair-accordion-content {
+  padding: var(--space-3);
+  border-top: 1px solid var(--chassis-border-subtle);
+  color: var(--text-body);
+  line-height: 1.5;
+  background: var(--chassis-surface);
+}
+
+/* -------------------------------------------------------------------------- */
+/* SESSION REWARDS & GIMMIGHOUL COIN BAG CARD                                 */
+/* -------------------------------------------------------------------------- */
+.reward-panel {
+  background: linear-gradient(135deg, var(--chassis-dark) 0%, #1c180d 100%);
+  border: 1px solid rgba(255, 190, 26, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.reward-stat-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  background: rgba(255, 190, 26, 0.05);
+  border: 1px solid rgba(255, 190, 26, 0.2);
+  border-radius: var(--radius-md);
+  transition: transform var(--transition-fast);
+}
+
+.reward-stat-box.stamped {
+  animation: reward-stamp 0.6s var(--ease-spring);
+}
+
+@keyframes reward-stamp {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); border-color: var(--coin-gold); }
+  100% { transform: scale(1); }
+}
+
+.reward-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.coin-bag-icon-frame {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffd454, #b58005);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(255, 190, 26, 0.35);
+  color: #111;
+  font-size: 22px;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--coin-gold);
+  letter-spacing: 0.06em;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-pure);
+  letter-spacing: -0.02em;
+}
+
+.stat-desc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+/* -------------------------------------------------------------------------- */
+/* POSTCARD HISTORY LEDGER                                                    */
+/* -------------------------------------------------------------------------- */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+}
+
+.history-empty {
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  color: var(--text-dim);
+  font-size: var(--text-xs);
+  background: var(--chassis-panel);
+  border: 1px dashed var(--chassis-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.history-card {
+  background: var(--chassis-panel);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: all var(--transition-fast);
+}
+
+.history-card:hover {
+  border-color: var(--chassis-border-default);
+  background: var(--chassis-surface);
+}
+
+.history-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history-badge {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  padding: 2px 7px;
+  background: rgba(0, 229, 153, 0.12);
+  color: var(--signal-green);
+  border: 1px solid rgba(0, 229, 153, 0.3);
+  border-radius: var(--radius-pill);
+}
+
+.latency-tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  padding: 2px 6px;
+  background: rgba(255, 190, 26, 0.12);
+  color: var(--coin-gold);
+  border-radius: var(--radius-pill);
+  margin-left: var(--space-2);
+}
+
+.history-timestamp {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--text-dim);
+}
+
+.history-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  background: var(--chassis-surface);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+}
+
+.history-detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-detail-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.history-detail-val {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-high);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* -------------------------------------------------------------------------- */
+/* RIGHT COLUMN: HARDWARE TELEMETRY & IDENTITY                                 */
+/* -------------------------------------------------------------------------- */
+.identity-box {
+  background: var(--chassis-dark);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.identity-key-display {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: var(--space-3);
+  background: var(--chassis-black);
+  border: 1px solid var(--chassis-border-default);
+  border-radius: var(--radius-sm);
+  color: var(--coin-gold);
+  word-break: break-all;
+  user-select: all;
+  margin: var(--space-3) 0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.id-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 7px var(--space-3);
+  background: var(--chassis-panel);
+  border: 1px solid var(--chassis-border-default);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-high);
+  transition: all var(--transition-fast);
+}
+
+.secondary-btn:hover {
+  background: var(--chassis-surface);
+  border-color: var(--chassis-border-highlight);
+  color: var(--text-pure);
+}
+
+/* Telemetry Feed */
+.telemetry-panel {
+  background: var(--chassis-dark);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--chassis-border-subtle);
+}
+
+.terminal-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-pure);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.terminal-clear-btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--chassis-border-subtle);
+}
+
+.terminal-clear-btn:hover {
+  color: var(--text-pure);
+  border-color: var(--chassis-border-default);
+}
+
+.terminal-feed {
+  background: var(--chassis-black);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  height: 240px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.log-entry {
+  display: flex;
+  gap: var(--space-2);
+  line-height: 1.4;
+}
+
+.log-time {
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.log-msg {
+  color: var(--text-body);
+  word-break: break-all;
+}
+
+.log-msg.info { color: var(--joycon-cyan); }
+.log-msg.warn { color: var(--coin-gold); }
+.log-msg.error { color: var(--signal-danger); }
+
+/* Compatibility Checklist */
+.checklist-panel {
+  background: var(--chassis-dark);
+  border: 1px solid var(--chassis-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.check-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.check-icon.ok {
+  background: rgba(0, 229, 153, 0.12);
+  color: var(--signal-green);
+  border: 1px solid rgba(0, 229, 153, 0.3);
+}
+
+.check-icon.warn {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--coin-gold);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.check-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-high);
+}
+
+.check-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* -------------------------------------------------------------------------- */
+/* FOOTER                                                                     */
+/* -------------------------------------------------------------------------- */
+.footer-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--chassis-border-subtle);
+  font-size: var(--text-xs);
+  color: var(--text-dim);
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--text-pure);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--chassis-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--chassis-border-highlight);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* -------------------------------------------------------------------------- */
+/* MOBILE RESPONSIVE ADAPTATIONS (PHONES & TABLETS)                           */
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  body {
+    padding: var(--space-3) var(--space-3) var(--space-6);
+  }
+
+  .app-container {
+    gap: var(--space-4);
+  }
+
+  .virtual-console-deck {
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+  }
+
+  .console-hardware-body {
+    grid-template-columns: 36px 1fr 36px;
+    gap: 8px;
+    min-height: 260px;
+  }
+
+  .joycon-rail-left,
+  .joycon-rail-right {
+    padding: var(--space-2) 2px;
+  }
+
+  .joycon-stick {
+    width: 26px;
+    height: 26px;
+  }
+  .joycon-stick-inner {
+    width: 14px;
+    height: 14px;
+  }
+
+  .joycon-dpad-btn,
+  .joycon-abxy-btn {
+    width: 9px;
+    height: 9px;
+    font-size: 5px;
+  }
+
+  .joycon-home-btn {
+    width: 12px;
+    height: 12px;
+  }
+
+  .console-screen-frame {
+    padding: var(--space-2);
+  }
+
+  .screen-headline {
+    font-size: 1.25rem;
+  }
+
+  .screen-subtext {
+    font-size: var(--text-xs);
+  }
+
+  .reward-stat-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .stat-value {
+    font-size: var(--text-xl);
+  }
+}
+
+@media (max-width: 540px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .brand-group {
+    justify-content: flex-start;
+  }
+
+  .badge-row {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .console-top-strip {
+    font-size: 10px;
+  }
+
+  .console-hardware-body {
+    grid-template-columns: 28px 1fr 28px;
+    gap: 6px;
+    min-height: 240px;
+  }
+
+  .joycon-stick {
+    width: 20px;
+    height: 20px;
+  }
+
+  .joycon-stick-inner {
+    width: 10px;
+    height: 10px;
+  }
+
+  .joycon-dpad,
+  .joycon-abxy {
+    display: none; /* Hide dense micro-buttons on small mobile screens to keep layout clean */
+  }
+
+  .screen-top-bar {
+    flex-wrap: wrap;
+    gap: 4px;
+    font-size: 10px;
+  }
+
+  #screen-console-clock {
+    display: none; /* Keep screen clean on small phone viewports */
+  }
+
+  .screen-display-core {
+    padding: var(--space-2) 0;
+  }
+
+  .screen-headline {
+    font-size: 1.125rem;
+  }
+
+  .screen-steps-rail {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+
+  .screen-step-node {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+
+  .btn-main-label {
+    font-size: var(--text-base);
+  }
+
+  .btn-sub-label {
+    font-size: 10px;
+  }
+
+  .primary-action-btn {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .console-link-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .console-link-badge {
+    align-self: flex-start;
+  }
+
+  .guide-flow-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .history-details-grid {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .footer-note {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
